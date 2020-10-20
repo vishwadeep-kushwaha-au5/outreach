@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+
+    <script src="https://kit.fontawesome.com/7f85a03441.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" type="text/css" href="/css/nav_home.css">
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+
+<body>
+    <div id="navigation-bar"></div>
+
+    </div>
+    <div class="main-div">
+
+        <div class="sub-main-div">
+            <div class="side-bar">
+                <div class="cover-photo">
+                    <div class="profile-photo"><img src="{{user.imageFile}}" alt="Profile Photo"></div>
+                </div>
+                <div class="sidebar-header">
+                    {{user.name}}
+                </div>
+                <div class="sidebar-location">
+                    {{user.city}}
+                </div>
+                <div class="sidebar-header">
+                    <a href="/user">View Profile</a>
+                </div>
+                <hr>
+            </div>
+            <div class="event-post-div">
+                
+                <div class="create-post" data-toggle="modal" data-target="#myModal">
+                    <i class="fas fa-pen"></i>&nbsp;
+                    <span><u>Create event or post...</u></span>
+                </div>
+                <div class="selection">
+                    <ul class="select-list">
+                        <li class="active" id="showEvents">Events</li>
+                        <li id="showTasks">Tasks</li>
+                    </ul>
+                </div>
+                <div id="gumgumEvent">
+                {{#each event}}
+                <div class="event-div">
+                    <div class="event-outer">
+
+                        <div class="author-details">
+                            <div class="author-photo"><img src={{this.author.image}} alt=""></div>{{this.author.name}}
+                        </div>
+                        <div class="event-content">
+                            <div class="event-image"><img src={{this.image}}></div>
+                            <div class="event-details">
+                                <p class="event-name">{{this.name}}</p>
+                                <p class="event-city"><i class="fas fa-map-marker-alt" aria-hidden="true"></i>&nbsp;{{this.city}}</p>
+                                <p class="event-description"><b>Description:</b> {{this.shortdescription}}... <a
+                                        href="/event/{{this._id}}" style="font-size: 11px;">See more</a></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="event-reaction"><i class="far fa-heart changeHeart"  onclick="likeToggle(this)"></i></div>
+                </div>
+                {{/each}}
+                </div>
+                
+                <div id="gumgumTask" class="hideDiv">
+                    {{#each task}}
+                    <div class="task-div">
+                        <div class="task-outer">
+
+                            <div class="author-details">
+                                <div class="author-photo"><img src={{this.author.image}} alt=""></div>{{this.author.name}}
+                            </div>
+                            <div class="task-content">
+                                <div class="task-image"><img src={{this.image}}></div>
+                                <div class="task-details">
+                                    <p class="task-name"><b>{{this.name}}</b></p>
+                                    <p class="task-city"><b><i class="fas fa-map-marker-alt" aria-hidden="true"></i>&nbsp;{{this.city}}</b></p>
+                                    <p class="task-description"><b>Description:</b> {{this.shortdescription}}... <a
+                                            href="/task/{{this._id}}" style="font-size: 11px;">See more</a></p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="task-reaction">
+                            <i class="far fa-heart" class="changeHeart" onclick="likeToggle(this)"></i>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Create Event</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/event" method="POST" enctype="multipart/form-data">
+                                    <input type="text" class="form-control" name="eventname" id="eventname"
+                                        placeholder="Event Name">
+                                    <input type="text" class="form-control" name="city" id="city" placeholder="City">
+                                    <input type="text" class="form-control" name="description" id="description"
+                                        placeholder="Description">
+                                    <div class="custom-file mb-3">
+                                        <input type="file" class="custom-file-input" id="eventFile" name="imageFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <button class="btn btn-outline-dark">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="main-div">
+
+        <div class="sub-main-div">
+            <div class="task-post-div">
+
+                <div class="create-post" data-toggle="modal" data-target="#myModalTask">
+                    <i class="fas fa-pen"></i>&nbsp;
+                    <span><u>Create Task...</u></span>
+                </div>
+
+                <div class="modal" id="myModalTask">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Task Title</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <form action="/task" method="POST" enctype="multipart/form-data">
+                                    <input type="text" class="form-control" name="taskname" id="taskname"
+                                        placeholder="Task Name">
+                                    <input type="text" class="form-control" name="city" id="city" placeholder="City">
+                                    <input type="text" class="form-control" name="description" id="description"
+                                        placeholder="Description">
+                                    <div class="custom-file mb-3">
+                                        <input type="file" class="custom-file-input" id="eventFile" name="imageFile">
+                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                    </div>
+                                    <button class="btn btn-outline-dark">Submit</button>
+                                </form>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#navigation-bar").load("/navigation_bar/nav/nav.hbs");
+
+        $(".guest-search-field").focus(() => {
+            $(".guest-search-border").addClass("search-parent-focus");
+        }).blur(() => {
+            $(".guest-search-border").removeClass("search-parent-focus");
+        })
+
+        $("#eventFile").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+
+        $('#showTasks').on('click',()=>{
+            $('#gumgumTask').removeClass('hideDiv')
+            $('#gumgumEvent').addClass('hideDiv')
+            $('#showTasks').addClass('active');
+            $('#showEvents').removeClass('active');
+        })
+
+        $('#showEvents').on('click',()=>{
+            $('#gumgumTask').addClass('hideDiv')
+            $('#gumgumEvent').removeClass('hideDiv')
+            $('#showTasks').removeClass('active');
+            $('#showEvents').addClass('active');
+        })
+    });
+    function likeToggle(x){
+            x.classList.toggle("fas");
+            x.classList.toggle("far")
+    }
+</script>
+
+</html>
